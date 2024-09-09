@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../assets/favicon.png" />
+    <link href="./output.css" rel="stylesheet" />
+    <title>Les petits plats</title>
+  </head>
+
+  <body class="bg-soft-peach">
+
+    <header
+      id="hero-container"
+      class="bg-hero-pattern bg-fixed bg-no-repeat bg-cover bg-center flex flex-col"
+    >
+      <section id="navbar" class="flex my-12 mx-16 items-center">
+        <h2 class="font-title uppercase text-white text-2xl">
+          Les petits plats
+        </h2>
+        <img src="../assets/favicon.png" alt="logo" class="max-w-5 max-h-5" />
+      </section>
+      <form class="mx-auto mt-28 mb-48">
+        <h1
+          class="uppercase max-w-3xl font-title text-5xl/[66px] text-yellow-300 text-center mb-8"
+        >
+          CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET
+          DÉLICIEUSES
+        </h1>
+        <label for="default-search" class="sr-only">Barre de recherche</label>
+        <div class="relative max-w-4xl">
+          <input
+            type="search"
+            id="default-search"
+            class="block w-full p-6 ps-6 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
+            placeholder="Rechercher une recette, un ingrédient, ..."
+            required
+          />
+          <button
+            type="submit"
+            class="group transition-colors hover:text-black absolute end-2.5 bottom-2.5 bg-black hover:bg-yellow-300 active:bg-yellow-600 rounded-lg p-3"
+          >
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              class="stroke-white group-hover:stroke-black"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="10" cy="10" r="9.5" />
+              <line x1="18.3536" y1="18.6464" x2="27.3536" y2="27.6464" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </header>
+
+    <main class="mx-auto px-24 py-5 max-w-screen-2xl flex flex-col gap-5">
+
+      <section id="filter-bar-section" class="flex items-center max-h-14">
+        <div id="filter-bar-container" class="flex gap-16">
+          <div class="ingredients dropdown">
+            <!-- Button menu -->
+            <button 
+              id="button-dropdown-ingredients" 
+              class="text-black bg-white hover:bg-yellow-200 active:bg-yellow-600 font-body rounded-lg text-base px-5 py-2.5 w-48 text-center inline-flex items-center justify-between"
+              type="button">
+              Ingrédients
+              <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m1 1 4 4 4-4"/>
+              </svg>
+            </button>
+            
+            <!-- Dropdown menu -->
+            <div id="dropdown-ingredients" class="block absolute z-10 bg-white rounded-b-lg w-48">
+              <form id="searchbar-ingredients" class="p-3 pt-0">
+                <label 
+                  for="ingredients-search" 
+                  class="sr-only">
+                  Recherche ingrédients
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-2 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                  </div>
+                  <input 
+                    type="text" 
+                    id="ingredients-search"
+                    name="ingredients-search"
+                    class="block w-full p-2 ps-7 pe-7 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
+                  />
+                  <button
+                    type="reset"
+                    value="Reset"
+                    class="transition-colors absolute end-1 bottom-1.5 bg-white hover:bg-soft-peach active:bg-yellow-600 rounded-full p-2"
+                  >
+                    <svg class="w-2 h-2" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 7L4 4M4 4L1 1M4 4L7 1M4 4L1 7" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </form>
+  
+              <ul id="list-ingredients" class="h-48 px-3 pb-3 overflow-y-auto">
+                <li class="flex items-center ps-2 pe-2 rounded hover:bg-yellow-100 active:bg-yellow-600 has-[:checked]:bg-yellow-300">
+                  <label for="checkbox-item-01" class="w-full py-2 font-body text-sm text-black">Bonnie Green</label>
+                  <input id="checkbox-item-01" type="checkbox" value="" class="w-4 h-4 appearance-none rounded-full bg-no-repeat bg-center checked:bg-black checked:bg-cross-svg">
+                </li>
+                
+                <li class="flex items-center ps-2 pe-2 rounded hover:bg-yellow-100 active:bg-yellow-600 has-[:checked]:bg-yellow-300">
+                  <label for="checkbox-item-02" class="w-full py-2 font-body text-sm text-black">Jese Leos</label>
+                  <input id="checkbox-item-02" type="checkbox" value="" class="w-4 h-4 appearance-none rounded-full bg-no-repeat bg-center checked:bg-black checked:bg-cross-svg">
+                </li>
+                
+                <li class="flex items-center ps-2 pe-2 rounded hover:bg-yellow-100 active:bg-yellow-600 has-[:checked]:bg-yellow-300">
+                  <label for="checkbox-item-03" class="w-full py-2 font-body text-sm text-black">Michael Gough</label>
+                  <input id="checkbox-item-03" type="checkbox" value="" class="w-4 h-4 appearance-none rounded-full bg-no-repeat bg-center checked:bg-black checked:bg-cross-svg">
+                </li>
+                
+                <li class="flex items-center ps-2 pe-2 rounded hover:bg-yellow-100 active:bg-yellow-600 has-[:checked]:bg-yellow-300">
+                  <label for="checkbox-item-04" class="w-full py-2 font-body text-sm text-black">Joseph Mcfall</label>
+                  <input id="checkbox-item-04" type="checkbox" value="" class="w-4 h-4 appearance-none rounded-full bg-no-repeat bg-center checked:bg-black checked:bg-cross-svg">
+                </li>
+                
+                <li class="flex items-center ps-2 pe-2 rounded hover:bg-yellow-100 active:bg-yellow-600 has-[:checked]:bg-yellow-300">
+                  <label for="checkbox-item-05" class="w-full py-2 font-body text-sm text-black">Leslie Livingston</label>
+                  <input id="checkbox-item-05" type="checkbox" value="" class="w-4 h-4 appearance-none rounded-full bg-no-repeat bg-center checked:bg-black checked:bg-cross-svg">
+                </li>
+                
+                <li class="flex items-center ps-2 pe-2 rounded hover:bg-yellow-100 active:bg-yellow-600 has-[:checked]:bg-yellow-300">
+                  <label for="checkbox-item-06" class="w-full py-2 font-body text-sm text-black">Roberta Casas</label>
+                  <input id="checkbox-item-06" type="checkbox" value="" class="w-4 h-4 appearance-none rounded-full bg-no-repeat bg-center checked:bg-black checked:bg-cross-svg">
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <div class="appareils dropdown">
+            <!-- Button menu -->
+            <button 
+            id="button-dropdown-appareils" 
+            class="text-black bg-white hover:bg-yellow-200 active:bg-yellow-600 font-body rounded-lg text-base px-5 py-2.5 w-48 text-center inline-flex items-center justify-between"
+            type="button">
+            Appareils
+            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m1 1 4 4 4-4"/>
+            </svg>
+          </button>
+          </div>
+  
+          <div class="ustensiles dropdown">
+            <!-- Button menu -->
+            <button 
+            id="button-dropdown-ustensiles" 
+            class="text-black bg-white hover:bg-yellow-200 active:bg-yellow-600 font-body rounded-lg text-base px-5 py-2.5 w-48 text-center inline-flex items-center justify-between"
+            type="button">
+            Ustensiles
+            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m1 1 4 4 4-4"/>
+            </svg>
+          </button>
+          </div>
+        </div>
+
+        <div id="number-of-recipes" class="ml-auto">
+          <h3 class="uppercase font-title text-xl ">1500 recettes</h3>
+        </div>
+      </section>
+
+      <section id="filter-selection" class="flex justify-start gap-3">
+        <button 
+          class="text-black bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-600 font-body rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center justify-between gap-2"
+          type="button">
+          Crême de coco
+          <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5" stroke="#1B1B1B" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button 
+          class="text-black bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-600 font-body rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center justify-between gap-2"
+          type="button">
+          Tomate
+          <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5" stroke="#1B1B1B" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+          <button 
+            class="text-black bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-600 font-body rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center justify-between gap-2"
+            type="button">
+            Tomate
+            <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5" stroke="#1B1B1B" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button 
+            class="text-black bg-yellow-300 hover:bg-yellow-200 active:bg-yellow-600 font-body rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center justify-between gap-2"
+            type="button">
+            Tomate
+            <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5" stroke="#1B1B1B" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+      </section>
+
+      <section id="recipe-cards-container" class="grid grid-cols-auto-fit-280 gap-12">
+
+        <div class="recipe-card max-w-sm bg-white border rounded-lg drop-shadow-2xl">
+            <div class="recipe-image rounded-t-lg h-64 w-full overflow-hidden grid">
+              <img class="object-cover object-center w-full h-full superimpose" src="../assets/recipes/Recette04.jpg" alt="plat" />
+              <div class="text-black bg-yellow-300 font-body text-base text-center h-fit w-fit superimpose px-5 py-2.5 m-5 rounded-full justify-self-end">
+                <p>10min</p>
+              </div>
+            </div>
+        
+            <div class="recipe-content p-5">
+              <h3 class="recipe-title uppercase font-title text-xl mt-3 mb-7">Salade méditerannéene fraîche au chèvre</h3>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mb-4">Recette</h4>
+              <p class="recipe-steps font-body text-sm text-black">
+                Hachez les noix grossièrement. Faire fondre le chocolat avec le beurre. Mélanger les oeufs et le sucre et mélanger au chocolat. Ajouter la farine. Mélanger afin d'avoir quelque chose d'homogène.
+              </p>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mt-7 mb-4">Ingrédients</h4>
+              <dl class="recipe-ingredients grid grid-cols-2 gap-5 font-body text-sm">
+                <div class="ingredient">
+                  <dt class="text-black">Pâte sablée</dt>
+                  <dd class="text-gray-500">1</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Noix</dt>
+                  <dd class="text-gray-500">180grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Chocolat noir</dt>
+                  <dd class="text-gray-500">150grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Beurre</dt>
+                  <dd class="text-gray-500">120grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Fraise</dt>
+                  <dd class="text-gray-500">6</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        
+          <div class="recipe-card max-w-sm bg-white border rounded-lg drop-shadow-2xl">
+            <div class="recipe-image rounded-t-lg h-64 w-full overflow-hidden">
+              <img class="object-cover object-center w-full h-full" src="../assets/recipes/Recette01.jpg" alt="plat" />
+            </div>
+            <div class="recipe-content p-5">
+              <h3 class="recipe-title uppercase font-title text-xl mt-3 mb-7">Salade méditerannéene fraîche au chèvre</h3>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mb-4">Recette</h4>
+              <p class="recipe-steps font-body text-sm text-black">
+                Hachez les noix grossièrement. Faire fondre le chocolat avec le beurre. Mélanger les oeufs et le sucre et mélanger au chocolat. Ajouter la farine. Mélanger afin d'avoir quelque chose d'homogène.
+              </p>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mt-7 mb-4">Ingrédients</h4>
+              <dl class="recipe-ingredients grid grid-cols-2 gap-5 font-body text-sm">
+                <div class="ingredient">
+                  <dt class="text-black">Pâte sablée</dt>
+                  <dd class="text-gray-500">1</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Noix</dt>
+                  <dd class="text-gray-500">180grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Chocolat noir</dt>
+                  <dd class="text-gray-500">150grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Beurre</dt>
+                  <dd class="text-gray-500">120grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Fraise</dt>
+                  <dd class="text-gray-500">6</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="recipe-card max-w-sm bg-white border rounded-lg drop-shadow-2xl">
+            <div class="recipe-image rounded-t-lg h-64 w-full overflow-hidden">
+              <img class="object-cover object-center w-full h-full" src="../assets/recipes/Recette02.jpg" alt="plat" />
+            </div>
+            <div class="recipe-content p-5">
+              <h3 class="recipe-title uppercase font-title text-xl mt-3 mb-7">Salade méditerannéene fraîche au chèvre</h3>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mb-4">Recette</h4>
+              <p class="recipe-steps font-body text-sm text-black">
+                Hachez les noix grossièrement. Faire fondre le chocolat avec le beurre. Mélanger les oeufs et le sucre et mélanger au chocolat. Ajouter la farine. Mélanger afin d'avoir quelque chose d'homogène.
+              </p>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mt-7 mb-4">Ingrédients</h4>
+              <dl class="recipe-ingredients grid grid-cols-2 gap-5 font-body text-sm">
+                <div class="ingredient">
+                  <dt class="text-black">Pâte sablée</dt>
+                  <dd class="text-gray-500">1</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Noix</dt>
+                  <dd class="text-gray-500">180grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Chocolat noir</dt>
+                  <dd class="text-gray-500">150grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Beurre</dt>
+                  <dd class="text-gray-500">120grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Fraise</dt>
+                  <dd class="text-gray-500">6</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="recipe-card max-w-sm bg-white border rounded-lg drop-shadow-2xl">
+            <div class="recipe-image rounded-t-lg h-64 w-full overflow-hidden">
+              <img class="object-cover object-center w-full h-full" src="../assets/recipes/Recette03.jpg" alt="plat" />
+            </div>
+            <div class="recipe-content p-5">
+              <h3 class="recipe-title uppercase font-title text-xl mt-3 mb-7">Salade méditerannéene fraîche au chèvre</h3>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mb-4">Recette</h4>
+              <p class="recipe-steps font-body text-sm text-black">
+                Hachez les noix grossièrement. Faire fondre le chocolat avec le beurre. Mélanger les oeufs et le sucre et mélanger au chocolat. Ajouter la farine. Mélanger afin d'avoir quelque chose d'homogène.
+              </p>
+              <h4 class="font-body uppercase text-gray-500 text-xs font-bold tracking-widest mt-7 mb-4">Ingrédients</h4>
+              <dl class="recipe-ingredients grid grid-cols-2 gap-5 font-body text-sm">
+                <div class="ingredient">
+                  <dt class="text-black">Pâte sablée</dt>
+                  <dd class="text-gray-500">1</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Noix</dt>
+                  <dd class="text-gray-500">180grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Chocolat noir</dt>
+                  <dd class="text-gray-500">150grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Beurre</dt>
+                  <dd class="text-gray-500">120grammes</dd>
+                </div>
+                <div class="ingredient">
+                  <dt class="text-black">Fraise</dt>
+                  <dd class="text-gray-500">6</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+      </section>
+      
+    </main>
+    <script type="module" src="../scripts/03_controllers/index.js"></script>
+  </body>
+</html>
