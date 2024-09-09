@@ -14,7 +14,7 @@ import { checkboxListener } from "../04_plugins/tagManagement.js"
 async function init() {
 
     // Toutes les recettes
-    const allRecipes = oneRecipe
+    const allRecipes = recipes
     
     // Affiche les recettes
     displayRecipeCards(allRecipes)
