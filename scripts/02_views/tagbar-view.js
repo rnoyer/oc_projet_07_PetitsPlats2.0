@@ -1,4 +1,6 @@
-import { allLists } from "../04_plugins/tagManagement.js"
+import { updateWebPage } from "../03_controllers/index.js"
+import { updateTagList } from "../01_models/tags_model.js"
+import { uncheckItemInList } from "./filterbar-view.js"
 
 function createTagButton(tag, listID) {
     const buttonElement = document.createElement('button')
@@ -20,27 +22,37 @@ function createTagButton(tag, listID) {
     svgPath.setAttribute('stroke-linejoin', 'round')
 
     svgCross.append(svgPath)
+    svgCross.addEventListener('click', listenClickOnTag)
     buttonElement.append(svgCross)
 
     return buttonElement
 }
 
-export function displayTagButtons() {
+export function displayTagButtons(listOfTags) {
+    // uses listsOfCheckedElements
     const HTMLElementToHydrate = document.getElementById('filter-selection')
-    // console.log('--------------')
-    for(const list in allLists) {
-        if(allLists[list].length > 0) {
-            allLists[list].forEach(tag => {
+    console.log('--------------')
+    for(const list in listOfTags) {
+        if(listOfTags[list].length > 0) {
+            listOfTags[list].forEach(tag => {
                 const tagButton = createTagButton(tag, list)
                 HTMLElementToHydrate.append(tagButton)
             });
         }
-        // console.log(`${list}: ${allLists[list]}`)
+        console.log(`${list}: ${listOfTags[list]}`)
     }
 }
 
-export function updateHTMLTag() {
+export function updateTags(listOfTags) {
     const HTMLElementToHydrate = document.getElementById('filter-selection')
-    HTMLElementToHydrate.textContent=''
-    displayTagButtons()
+    HTMLElementToHydrate.replaceChildren()
+    displayTagButtons(listOfTags)
+}
+
+function listenClickOnTag(e) {
+    const tagName = e.target.nodeName === 'svg' ? e.target.parentNode.textContent : e.target.parentNode.parentNode.textContent
+    const listID = e.target.nodeName === 'svg' ? e.target.parentNode.getAttribute('listid') : e.target.parentNode.parentNode.getAttribute('listid')
+    uncheckItemInList(tagName, listID)
+    updateTagList(tagName, listID)
+    updateWebPage()
 }

@@ -1,15 +1,19 @@
-export function getFilteredRecipes (recipes) {
+import { recipes, oneRecipe, fewRecipes, noRecipe } from "../../data/recipes.js"
 
-    //TODO Ajouter algo de tri ici
+export function getFilteredRecipeArray() {
 
-    const filteredResponse = recipes
+    //TO DO : Si Pas de tag + < 2 char, display 'allRecipes'
+    let filteredResponse = oneRecipe
+
+    //TO DO : algo de tri utilisant en input 'allRecipes'
+
     return filteredResponse
 }
 
-export function getIngredientList (recipes) {
+export function getIngredientList(recipesArray) {
     let ingredientList = []
     // Store all ingredients of all recipes given
-    recipes.forEach(recipe => {
+    recipesArray.forEach(recipe => {
         recipe.ingredients.forEach(item => {
             ingredientList.push(item.ingredient)
         });
@@ -22,10 +26,10 @@ export function getIngredientList (recipes) {
     return sortedIngredientList
 }
 
-export function getApplianceList (recipes) {
+export function getApplianceList(recipesArray) {
     let applianceList = []
     // Store all appliances of all recipes given
-    recipes.forEach(recipe => {
+    recipesArray.forEach(recipe => {
         applianceList.push(recipe.appliance)
     });
     // Lowercase, remove and sort duplicate appliances
@@ -36,10 +40,10 @@ export function getApplianceList (recipes) {
     return sortedApplianceList
 }
 
-export function getUstensilList (recipes) {
+export function getUstensilList(recipesArray) {
     let ustensilList = []
     // Store all appliances of all recipes given
-    recipes.forEach(recipe => {
+    recipesArray.forEach(recipe => {
         ustensilList.push(...recipe.ustensils)
     });
     // Lowercase, remove and sort duplicate appliances
@@ -48,8 +52,4 @@ export function getUstensilList (recipes) {
     sortedUstensilList.sort()
 
     return sortedUstensilList
-}
-
-export function getNumberOfRecipesDisplayed (recipes) {
-    return recipes.length
 }

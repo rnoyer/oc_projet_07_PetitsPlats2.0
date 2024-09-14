@@ -80,13 +80,33 @@ function createCard(cardData) {
     return cardContainer
 }
 
-export function displayRecipeCards(recipesArray) {
+function createNoCardFallback(item = 'cela') {
+    const fallbackDiv = document.createElement('div')
+    fallbackDiv.classList.add('text-stone-400')
+    fallbackDiv.innerHTML = `Aucune recette ne contient ${item}. Vous pouvez chercher «tarte aux pommes », « poisson », etc.`
+
+    return fallbackDiv
+}
+
+let HTMLCardsContainer = document.getElementById('recipe-cards-container')
+
+function displayRecipeCards(recipesArray) {
     // HTML element to populate
-    const HTMLCardsContainer = document.getElementById('recipe-cards-container')
+    HTMLCardsContainer = document.getElementById('recipe-cards-container')
     
-    // Loop through each recipes and populate HTML element
-    recipesArray.forEach(element => {
-        const recipeCard = createCard(element)
-        HTMLCardsContainer.appendChild(recipeCard)
-    });
+    if(recipesArray.length > 0) {
+        // Loop through each recipes and populate HTML element
+        recipesArray.forEach(element => {
+            const recipeCard = createCard(element)
+            HTMLCardsContainer.appendChild(recipeCard)
+        });
+    }else {
+        const fallbackMessage = createNoCardFallback()
+        HTMLCardsContainer.append(fallbackMessage)
+    }
+}
+
+export function updateRecipeCards(recipesArray) {
+    HTMLCardsContainer.replaceChildren()
+    displayRecipeCards(recipesArray)
 }
