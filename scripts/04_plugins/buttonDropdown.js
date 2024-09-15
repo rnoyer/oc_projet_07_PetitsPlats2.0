@@ -13,7 +13,6 @@ export function dropdownListener() {
 
     // Closes dropdown list when click outside of it
     window.onclick = e => {
-// TO DO : FIX bug dropdown closes unexpectedly when item is clicked !!!
         // Does the clicked element has the same ID as the element triggering the EventListener above?  
         let isSameButton = e.target.getAttribute('id') === clickedList
         // Is it a click in a dropdown List?

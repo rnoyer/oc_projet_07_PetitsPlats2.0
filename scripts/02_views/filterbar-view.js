@@ -16,12 +16,12 @@ function createListItem(item, checked = false) {
     const inputElement = document.createElement('input')
     inputElement.classList.add('min-w-4', 'h-4', 'appearance-none', 'rounded-full', 'bg-no-repeat', 'bg-center', 'checked:bg-black', 'checked:bg-cross-svg')
     inputElement.setAttribute('id', `checkbox-item-${randomString}`)
-    inputElement.addEventListener('click', listenToCheckboxChanges)
     if (checked) {
         inputElement.setAttribute('checked', '')
     }
     inputElement.setAttribute('type', 'checkbox')
     inputElement.setAttribute('value', item)
+    inputElement.addEventListener('click', listenToCheckboxChanges)
 
     liElement.append(labelElement, inputElement)
     return liElement
@@ -78,10 +78,10 @@ export function uncheckItemInList(item, listID) {
 }
 
 // Event Listener Function
-export function listenToCheckboxChanges(e) {
-    const tagName = e.target.value
-    const listID = e.target.parentNode.parentNode.id
-
+export function listenToCheckboxChanges(event) {
+    const tagName = event.target.value
+    const listID = event.target.parentNode.parentNode.id
+    event.stopPropagation();
     updateTagList(tagName, listID)
     updateWebPage()
 }

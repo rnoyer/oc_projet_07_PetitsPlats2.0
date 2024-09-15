@@ -31,7 +31,7 @@ function createTagButton(tag, listID) {
 export function displayTagButtons(listOfTags) {
     // uses listsOfCheckedElements
     const HTMLElementToHydrate = document.getElementById('filter-selection')
-    console.log('--------------')
+    // console.log('--------------')
     for(const list in listOfTags) {
         if(listOfTags[list].length > 0) {
             listOfTags[list].forEach(tag => {
@@ -39,7 +39,7 @@ export function displayTagButtons(listOfTags) {
                 HTMLElementToHydrate.append(tagButton)
             });
         }
-        console.log(`${list}: ${listOfTags[list]}`)
+        // console.log(`${list}: ${listOfTags[list]}`)
     }
 }
 
