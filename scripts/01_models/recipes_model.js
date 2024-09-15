@@ -1,13 +1,50 @@
 import { recipes, oneRecipe, fewRecipes, noRecipe } from "../../data/recipes.js"
+import { listsOfCheckedElements } from "./tags_model.js"
+import { userInputToProcess } from "../04_plugins/forms.js"
 
 export function getFilteredRecipeArray() {
+    let filteredResponse = []
 
-    //TO DO : Si Pas de tag + < 2 char, display 'allRecipes'
-    let filteredResponse = oneRecipe
+    //Si Pas de tag + < 2 char, display 'allRecipes'
+    if(!userInputToProcess && !listsOfCheckedElements.Ingredient.length && !listsOfCheckedElements.Appliance.length &&!listsOfCheckedElements.Ustensil.length){
+        return recipes
+    }
 
     //TO DO : algo de tri utilisant en input 'allRecipes'
+    // searchbar filter
+    let searchbarFilteredRecipes = []
+    recipes.forEach(recipe => {
+        let stringToCheck = ''
+        stringToCheck = stringToCheck.concat(recipe.name,' ',recipe.description,' ')
+        recipe.ingredients.forEach(ingredient => {
+            stringToCheck = stringToCheck.concat(ingredient.ingredient,' ')
+        });
+        if(stringToCheck.toLowerCase().includes(userInputToProcess)){
+            searchbarFilteredRecipes.push(recipe)
+        }
+    });
 
-    return filteredResponse
+    // ingredient filter
+    let ingredientFilteredRecipes = []
+    if(listsOfCheckedElements.Ingredient.length){
+        searchbarFilteredRecipes.forEach(recipe => {
+            let recipeIngredientList=[]
+            recipe.ingredients.forEach(item => {
+                recipeIngredientList.push(item.ingredient)
+            });
+            // TO DO : traverser tous les ingredients de la liste et trouver si intersection avec les tags 'ingredient'
+        });
+    }else{
+        ingredientFilteredRecipes = searchbarFilteredRecipes
+    }
+
+    // appliance filter
+
+    // ustensil filter
+
+
+    // return ingredientFilteredRecipes
+    return searchbarFilteredRecipes
 }
 
 export function getIngredientList(recipesArray) {

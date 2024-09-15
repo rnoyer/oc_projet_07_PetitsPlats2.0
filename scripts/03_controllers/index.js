@@ -39,7 +39,7 @@ export function updateWebPage(newArray) {
 async function init() {
     const recipeArray = allRecipes
 
-    updateWebPage(recipeArray)
+    updateWebPage()
 
     // Activate event listeners
     dropdownListener()
