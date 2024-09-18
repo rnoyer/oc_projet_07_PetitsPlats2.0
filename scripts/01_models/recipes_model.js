@@ -3,48 +3,73 @@ import { listsOfCheckedElements } from "./tags_model.js"
 import { userInputToProcess } from "../04_plugins/forms.js"
 
 export function getFilteredRecipeArray() {
-    let filteredResponse = []
 
-    //Si Pas de tag + < 2 char, display 'allRecipes'
-    if(!userInputToProcess && !listsOfCheckedElements.Ingredient.length && !listsOfCheckedElements.Appliance.length &&!listsOfCheckedElements.Ustensil.length){
-        return recipes
-    }
-
-    //TO DO : algo de tri utilisant en input 'allRecipes'
     // searchbar filter
-    let searchbarFilteredRecipes = []
-    recipes.forEach(recipe => {
+    let FilteredRecipes = recipes
+    FilteredRecipes.forEach(recipe => {
         let stringToCheck = ''
-        stringToCheck = stringToCheck.concat(recipe.name,' ',recipe.description,' ')
+        stringToCheck = stringToCheck.concat(recipe.name.toLowerCase(),' ',recipe.description.toLowerCase(),' ')
         recipe.ingredients.forEach(ingredient => {
-            stringToCheck = stringToCheck.concat(ingredient.ingredient,' ')
+            stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
         });
-        if(stringToCheck.toLowerCase().includes(userInputToProcess)){
-            searchbarFilteredRecipes.push(recipe)
+        if(!stringToCheck.includes(userInputToProcess.toLowerCase())){
+            FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
         }
     });
 
     // ingredient filter
-    let ingredientFilteredRecipes = []
     if(listsOfCheckedElements.Ingredient.length){
-        searchbarFilteredRecipes.forEach(recipe => {
-            let recipeIngredientList=[]
-            recipe.ingredients.forEach(item => {
-                recipeIngredientList.push(item.ingredient)
+        // Loop over each recipe
+        FilteredRecipes.forEach(recipe => {
+            // Build an array with all ingredients in the recipe
+            let recipeIngredients = []
+            recipe.ingredients.forEach(ingredient => {
+                recipeIngredients.push(ingredient.ingredient.toLowerCase())
             });
-            // TO DO : traverser tous les ingredients de la liste et trouver si intersection avec les tags 'ingredient'
+            // Test intersection between ingredients in recipe and ingredients checked in dropdown list.
+            // Return TRUE if intersection exist
+            let testIntersection = recipeIngredients.filter(item => listsOfCheckedElements.Ingredient.includes(item)).length
+            // Test wether ALL ingredients checked are in the recipe
+            // Return TRUE if ALL ingredients checked are in the recipe
+            const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ingredient.length
+
+            // Remove recipe from list if does not match criterias (allItemsInRecipe)
+            if(!allItemsInRecipe){
+                FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
+            }
         });
-    }else{
-        ingredientFilteredRecipes = searchbarFilteredRecipes
     }
 
     // appliance filter
+    if(listsOfCheckedElements.Appliance.length){
+        // Loop over each recipe
+        FilteredRecipes.forEach(recipe => {
+            const testAppliance = listsOfCheckedElements.Appliance[0] === recipe.appliance.toLowerCase()
+            if(!testAppliance){
+                FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
+            }
+        });
+    }
 
     // ustensil filter
+    if(listsOfCheckedElements.Ustensil.length){
+        // Loop over each recipe
+        FilteredRecipes.forEach(recipe => {
+            // Test intersection between ustensils in recipe and ustensils checked in dropdown list.
+            // Return TRUE if intersection exist
+            let testIntersection = recipe.ustensils.filter(item => listsOfCheckedElements.Ustensil.includes(item.toLowerCase())).length
+            // Test wether ALL ustensils checked are in the recipe
+            // Return TRUE if ALL ustensils checked are in the recipe
+            const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ustensil.length
 
-
-    // return ingredientFilteredRecipes
-    return searchbarFilteredRecipes
+            // Remove recipe from list if does not match criterias (allItemsInRecipe)
+            if(!allItemsInRecipe){
+                FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
+            }
+        });
+    }
+    
+    return FilteredRecipes
 }
 
 export function getIngredientList(recipesArray) {
