@@ -2,8 +2,6 @@ import { recipes} from "../../data/recipes.js"
 import { listsOfCheckedElements } from "./tags_model.js"
 import { SearchBarInput } from "../04_plugins/forms.js"
 
-export let actualRecipeArray = []
-
 export function getFilteredRecipeArray() {
 
     // searchbar filter

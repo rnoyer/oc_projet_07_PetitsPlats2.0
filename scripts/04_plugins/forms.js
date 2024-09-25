@@ -24,10 +24,10 @@ export function dropdownSearchBarInputListener(inputId, input, formId, dropDownI
     const SearchBar = document.getElementById(inputId)
     const form = document.getElementById(formId)
 
-    const actualArray = getFilteredRecipeArray()
-    const actualItemList = getFunction(actualArray)
-
     SearchBar.addEventListener('input', (e) => {
+        const actualArray = getFilteredRecipeArray()
+        const actualItemList = getFunction(actualArray)
+
         let userInput = e.target.value
         input = userInput.length > 2 ? userInput.toLowerCase() : ''
         
@@ -39,6 +39,9 @@ export function dropdownSearchBarInputListener(inputId, input, formId, dropDownI
     })
 
     form.addEventListener('reset', () => {
+        const actualArray = getFilteredRecipeArray()
+        const actualItemList = getFunction(actualArray)
+        
         updateDropdownList(document.getElementById(dropDownId), actualItemList, checkedElements)
     })
 }
