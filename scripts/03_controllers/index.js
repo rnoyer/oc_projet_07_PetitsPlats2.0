@@ -1,5 +1,3 @@
-//import initial recipes database
-import { recipes, oneRecipe, fewRecipes, noRecipe } from "../../data/recipes.js"
 // import models
 import { getFilteredRecipeArray, getIngredientList,getApplianceList, getUstensilList } from "../01_models/recipes_model.js"
 // import views
@@ -10,23 +8,28 @@ import { updateNumberOfRecipes, updateDropdownList } from "../02_views/filterbar
 // import plugins
 import { dropdownListener } from "../04_plugins/buttonDropdown.js"
 import { listsOfCheckedElements } from "../01_models/tags_model.js";
-import { inputListener } from "../04_plugins/forms.js"
-
-// Toutes les recettes
-export const allRecipes = fewRecipes
+import { 
+    SearchBarInputListener, 
+    dropdownSearchBarInputListener, 
+    ingredientsInput, 
+    ustensilInput, 
+    applianceInput 
+} from "../04_plugins/forms.js"
 
 export function updateWebPage(newArray) {
     const recipeArray = newArray ? newArray : getFilteredRecipeArray()
-    const ingredientList = getIngredientList(recipeArray)
-    const applianceList = getApplianceList(recipeArray)
-    const ustensilList = getUstensilList(recipeArray)
 
     // Update l'affichage des recettes
     updateRecipeCards(recipeArray)
 
     // Update des listes dropdown
+    const ingredientList = getIngredientList(recipeArray)
     updateDropdownList(document.getElementById('Ingredient'), ingredientList, listsOfCheckedElements.Ingredient)
+
+    const applianceList = getApplianceList(recipeArray)
     updateDropdownList(document.getElementById('Appliance'), applianceList, listsOfCheckedElements.Appliance)
+
+    const ustensilList = getUstensilList(recipeArray)
     updateDropdownList(document.getElementById('Ustensil'), ustensilList, listsOfCheckedElements.Ustensil)
 
     // Update le nombre de recettes affichées
@@ -37,13 +40,15 @@ export function updateWebPage(newArray) {
 }
 
 async function init() {
-    const recipeArray = allRecipes
-
+    // Load page
     updateWebPage()
 
     // Activate event listeners
     dropdownListener()
-    inputListener()
+    SearchBarInputListener()
+    dropdownSearchBarInputListener('ingredients-search', ingredientsInput, 'searchbar-ingredients', 'Ingredient', getIngredientList, listsOfCheckedElements.Ingredient)
+    dropdownSearchBarInputListener('appareils-search',applianceInput, 'searchbar-appareils', 'Appliance', getApplianceList, listsOfCheckedElements.Appliance)
+    dropdownSearchBarInputListener('ustensiles-search',ustensilInput, 'searchbar-ustensiles', 'Ustensil', getUstensilList, listsOfCheckedElements.Ustensil)
 }
 
 init()

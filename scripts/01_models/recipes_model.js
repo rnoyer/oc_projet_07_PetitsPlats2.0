@@ -1,6 +1,8 @@
-import { recipes, oneRecipe, fewRecipes, noRecipe } from "../../data/recipes.js"
+import { recipes} from "../../data/recipes.js"
 import { listsOfCheckedElements } from "./tags_model.js"
-import { userInputToProcess } from "../04_plugins/forms.js"
+import { SearchBarInput } from "../04_plugins/forms.js"
+
+export let actualRecipeArray = []
 
 export function getFilteredRecipeArray() {
 
@@ -12,7 +14,7 @@ export function getFilteredRecipeArray() {
         recipe.ingredients.forEach(ingredient => {
             stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
         });
-        if(!stringToCheck.includes(userInputToProcess.toLowerCase())){
+        if(!stringToCheck.includes(SearchBarInput.toLowerCase())){
             FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
         }
     });
@@ -26,9 +28,11 @@ export function getFilteredRecipeArray() {
             recipe.ingredients.forEach(ingredient => {
                 recipeIngredients.push(ingredient.ingredient.toLowerCase())
             });
+
             // Test intersection between ingredients in recipe and ingredients checked in dropdown list.
             // Return TRUE if intersection exist
             let testIntersection = recipeIngredients.filter(item => listsOfCheckedElements.Ingredient.includes(item)).length
+            
             // Test wether ALL ingredients checked are in the recipe
             // Return TRUE if ALL ingredients checked are in the recipe
             const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ingredient.length
@@ -58,6 +62,7 @@ export function getFilteredRecipeArray() {
             // Test intersection between ustensils in recipe and ustensils checked in dropdown list.
             // Return TRUE if intersection exist
             let testIntersection = recipe.ustensils.filter(item => listsOfCheckedElements.Ustensil.includes(item.toLowerCase())).length
+            
             // Test wether ALL ustensils checked are in the recipe
             // Return TRUE if ALL ustensils checked are in the recipe
             const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ustensil.length
@@ -68,7 +73,7 @@ export function getFilteredRecipeArray() {
             }
         });
     }
-    
+
     return FilteredRecipes
 }
 
