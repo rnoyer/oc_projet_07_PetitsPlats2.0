@@ -19,6 +19,7 @@ export function getFilteredRecipeArray() {
 
     // ingredient filter
     if(listsOfCheckedElements.Ingredient.length){
+        console.log(listsOfCheckedElements)
         // Loop over each recipe
         FilteredRecipes.forEach(recipe => {
             // Build an array with all ingredients in the recipe
@@ -44,6 +45,7 @@ export function getFilteredRecipeArray() {
 
     // appliance filter
     if(listsOfCheckedElements.Appliance.length){
+        console.log(listsOfCheckedElements)
         // Loop over each recipe
         FilteredRecipes.forEach(recipe => {
             const testAppliance = listsOfCheckedElements.Appliance[0] === recipe.appliance.toLowerCase()
@@ -55,6 +57,7 @@ export function getFilteredRecipeArray() {
 
     // ustensil filter
     if(listsOfCheckedElements.Ustensil.length){
+        console.log(listsOfCheckedElements)
         // Loop over each recipe
         FilteredRecipes.forEach(recipe => {
             // Test intersection between ustensils in recipe and ustensils checked in dropdown list.
