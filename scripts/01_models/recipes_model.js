@@ -6,72 +6,95 @@ export function getFilteredRecipeArray() {
 
     // searchbar filter
     let FilteredRecipes = recipes
-    FilteredRecipes.forEach(recipe => {
+    // Loop over each recipe
+    for (const recipe of FilteredRecipes) {
         let stringToCheck = ''
         stringToCheck = stringToCheck.concat(recipe.name.toLowerCase(),' ',recipe.description.toLowerCase(),' ')
-        recipe.ingredients.forEach(ingredient => {
+
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+            const ingredient = recipe.ingredients[j];
             stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
-        });
-        if(!stringToCheck.includes(SearchBarInput.toLowerCase())){
-            FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
         }
-    });
+        if(!stringToCheck.includes(SearchBarInput.toLowerCase())){
+            let newFilteredRecipes = [];
+            for (let i = 0; i < FilteredRecipes.length; i++) {
+                if(FilteredRecipes[i] !== recipe) {
+                    newFilteredRecipes.push(FilteredRecipes[i])
+                }
+            }
+            FilteredRecipes = newFilteredRecipes;
+        }
+    }
 
     // ingredient filter
     if(listsOfCheckedElements.Ingredient.length){
         // Loop over each recipe
-        FilteredRecipes.forEach(recipe => {
-            // Build an array with all ingredients in the recipe
-            let recipeIngredients = []
-            recipe.ingredients.forEach(ingredient => {
+        for (const recipe of FilteredRecipes) {
+            let recipeIngredients = [];
+            for (let i = 0; i < recipe.ingredients.length; i++) {
+                const ingredient = recipe.ingredients[i];
                 recipeIngredients.push(ingredient.ingredient.toLowerCase())
-            });
-
-            // Test intersection between ingredients in recipe and ingredients checked in dropdown list.
-            // Return TRUE if intersection exist
-            let testIntersection = recipeIngredients.filter(item => listsOfCheckedElements.Ingredient.includes(item)).length
-            
-            // Test wether ALL ingredients checked are in the recipe
-            // Return TRUE if ALL ingredients checked are in the recipe
-            const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ingredient.length
-
-            // Remove recipe from list if does not match criterias (allItemsInRecipe)
-            if(!allItemsInRecipe){
-                FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
             }
-        });
+            let intersectionArray = [];
+            for(let j = 0; j < recipeIngredients.length; j++) {
+                if(listsOfCheckedElements.Ingredient.includes(recipeIngredients[j].toLowerCase())){
+                    intersectionArray.push(recipeIngredients[j])
+                }
+            }
+            let testIntersection = intersectionArray.length;
+            const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ingredient.length
+            if(!allItemsInRecipe){
+                let newFilteredRecipes = [];
+                for (let i = 0; i < FilteredRecipes.length; i++) {
+                    if(FilteredRecipes[i] !== recipe) {
+                        newFilteredRecipes.push(FilteredRecipes[i])
+                    }
+                }
+                FilteredRecipes = newFilteredRecipes;
+            }
+        }
     }
 
     // appliance filter
     if(listsOfCheckedElements.Appliance.length){
         // Loop over each recipe
-        FilteredRecipes.forEach(recipe => {
+        for (const recipe of FilteredRecipes) {
             const testAppliance = listsOfCheckedElements.Appliance[0] === recipe.appliance.toLowerCase()
             if(!testAppliance){
-                FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
+                let newFilteredRecipes = [];
+                for (let i = 0; i < FilteredRecipes.length; i++) {
+                    if(FilteredRecipes[i] !== recipe) {
+                        newFilteredRecipes.push(FilteredRecipes[i])
+                    }
+                }
+                FilteredRecipes = newFilteredRecipes;
             }
-        });
+        }
     }
 
     // ustensil filter
     if(listsOfCheckedElements.Ustensil.length){
         // Loop over each recipe
-        FilteredRecipes.forEach(recipe => {
-            // Test intersection between ustensils in recipe and ustensils checked in dropdown list.
-            // Return TRUE if intersection exist
-            let testIntersection = recipe.ustensils.filter(item => listsOfCheckedElements.Ustensil.includes(item.toLowerCase())).length
-            
-            // Test wether ALL ustensils checked are in the recipe
-            // Return TRUE if ALL ustensils checked are in the recipe
-            const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ustensil.length
-
-            // Remove recipe from list if does not match criterias (allItemsInRecipe)
-            if(!allItemsInRecipe){
-                FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
+        for (const recipe of FilteredRecipes) {
+            let intersectionArray = [];
+            for(let j = 0; j < recipe.ustensils.length; j++) {
+                if(listsOfCheckedElements.Ustensil.includes(recipe.ustensils[j].toLowerCase())){
+                    intersectionArray.push(recipe.ustensils[j])
+                }
             }
-        });
+            let testIntersection = intersectionArray.length;
+            const allItemsInRecipe = testIntersection === listsOfCheckedElements.Ustensil.length
+            if(!allItemsInRecipe){
+                let newFilteredRecipes = [];
+                for (let i = 0; i < FilteredRecipes.length; i++) {
+                    if(FilteredRecipes[i] !== recipe) {
+                        newFilteredRecipes.push(FilteredRecipes[i])
+                    }
+                }
+                FilteredRecipes = newFilteredRecipes;
+            }
+        }
     }
-
     return FilteredRecipes
 }
 
