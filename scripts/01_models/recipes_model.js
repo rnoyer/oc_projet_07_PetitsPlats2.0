@@ -3,21 +3,23 @@ import { listsOfCheckedElements } from "./tags_model.js"
 import { SearchBarInput } from "../04_plugins/forms.js"
 
 export function getFilteredRecipeArray() {
+    let FilteredRecipes = recipes
 
     // searchbar filter
-    let FilteredRecipes = recipes
-    FilteredRecipes.forEach(recipe => {
-        // Concatenate all strings
-        let stringToCheck = ''
-        stringToCheck = stringToCheck.concat(recipe.name.toLowerCase(),' ',recipe.description.toLowerCase(),' ')
-        recipe.ingredients.forEach(ingredient => {
-            stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
+    if(SearchBarInput){
+        FilteredRecipes.forEach(recipe => {
+            // Concatenate all strings
+            let stringToCheck = ''
+            stringToCheck = stringToCheck.concat(recipe.name.toLowerCase(),' ',recipe.description.toLowerCase(),' ')
+            recipe.ingredients.forEach(ingredient => {
+                stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
+            });
+            // Remove recipe where search is not present
+            if(!stringToCheck.includes(SearchBarInput.toLowerCase())){
+                FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
+            }
         });
-        // Remove recipe where search is not present
-        if(!stringToCheck.includes(SearchBarInput.toLowerCase())){
-            FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
-        }
-    });
+    }
 
     // ingredient filter
     if(listsOfCheckedElements.Ingredient.length){
@@ -51,6 +53,8 @@ export function getFilteredRecipeArray() {
         // Loop over each recipe
         FilteredRecipes.forEach(recipe => {
             const testAppliance = listsOfCheckedElements.Appliance[0] === recipe.appliance.toLowerCase()
+
+            // Remove recipes
             if(!testAppliance){
                 FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
             }

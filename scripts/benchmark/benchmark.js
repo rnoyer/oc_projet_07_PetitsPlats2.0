@@ -79,99 +79,111 @@ function fonctionnelGetFilteredRecipeArray(recipeList = [], searchbar = '', ingr
 }
 
 // Algorithme natif
-function natifGetFilteredRecipeArray(recipeList = [], searchbar = '', ingredients = emptyList, appliances = emptyList, ustensils = emptyList) {
+
+export function natifGetFilteredRecipeArray(recipeList = [], searchbar = '', ingredients = emptyList, appliances = emptyList, ustensils = emptyList) {
 
     // searchbar filter
     let FilteredRecipes = recipeList
-    // Loop over each recipe
-    for (const recipe of FilteredRecipes) {
-        let stringToCheck = ''
-        stringToCheck = stringToCheck.concat(recipe.name.toLowerCase(),' ',recipe.description.toLowerCase(),' ')
+    let temporaryRecipeList = []
 
-        for (let j = 0; j < recipe.ingredients.length; j++) {
-            const ingredient = recipe.ingredients[j];
-            stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
-        }
-        if(!stringToCheck.includes(searchbar.toLowerCase())){
-            let newFilteredRecipes = [];
-            for (let i = 0; i < FilteredRecipes.length; i++) {
-                if(FilteredRecipes[i] !== recipe) {
-                    newFilteredRecipes.push(FilteredRecipes[i])
-                }
+    if(searchbar) {
+        // Loop over each recipe
+        for (let i = 0; i < FilteredRecipes.length; i++) {
+            const recipe = FilteredRecipes[i]
+
+            // Concatenate all strings to one for evaluation
+            let stringToCheck = ''
+            stringToCheck = stringToCheck.concat(recipe.name.toLowerCase(),' ',recipe.description.toLowerCase(),' ')
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                const ingredient = recipe.ingredients[j];
+                stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
             }
-            FilteredRecipes = newFilteredRecipes;
+            if(stringToCheck.includes(searchbar.toLowerCase())){
+                temporaryRecipeList.push(FilteredRecipes[i])
+            }
+
         }
+        FilteredRecipes = temporaryRecipeList
+        temporaryRecipeList = []
     }
 
     // ingredient filter
     if(ingredients.Ingredient.length){
         // Loop over each recipe
-        for (const recipe of FilteredRecipes) {
+        for (let i = 0; i < FilteredRecipes.length; i++){
+            const recipe = FilteredRecipes[i]
+
+            // Fetch ingredients
             let recipeIngredients = [];
-            for (let i = 0; i < recipe.ingredients.length; i++) {
-                const ingredient = recipe.ingredients[i];
+            for (let j = 0; j < recipe.ingredients.length; j++) {
+                const ingredient = recipe.ingredients[j];
                 recipeIngredients.push(ingredient.ingredient.toLowerCase())
             }
+
+            // Fetch ingredient intersection : recipe <> checked ingredients
             let intersectionArray = [];
-            for(let j = 0; j < recipeIngredients.length; j++) {
-                if(ingredients.Ingredient.includes(recipeIngredients[j].toLowerCase())){
-                    intersectionArray.push(recipeIngredients[j])
+            for(let k = 0; k < recipeIngredients.length; k++) {
+                if(ingredients.Ingredient.includes(recipeIngredients[k].toLowerCase())){
+                    intersectionArray.push(recipeIngredients[k])
                 }
             }
+
+            // Get to know if all items checked are in the recipe ingredients
             let testIntersection = intersectionArray.length;
             const allItemsInRecipe = testIntersection === ingredients.Ingredient.length
-            if(!allItemsInRecipe){
-                let newFilteredRecipes = [];
-                for (let i = 0; i < FilteredRecipes.length; i++) {
-                    if(FilteredRecipes[i] !== recipe) {
-                        newFilteredRecipes.push(FilteredRecipes[i])
-                    }
-                }
-                FilteredRecipes = newFilteredRecipes;
+
+            // Add recipe to filtered list if YES (allItemsInRecipe === true)
+            if(allItemsInRecipe){
+                temporaryRecipeList.push(FilteredRecipes[i])
             }
+
         }
+        FilteredRecipes = temporaryRecipeList
+        temporaryRecipeList = []
     }
 
     // appliance filter
     if(appliances.Appliance.length){
         // Loop over each recipe
-        for (const recipe of FilteredRecipes) {
+        for (let i = 0; i < FilteredRecipes.length; i++){
+            const recipe = FilteredRecipes[i]
+
+            // Get to know if appliance checked is in the recipe appliance
             const testAppliance = appliances.Appliance[0] === recipe.appliance.toLowerCase()
-            if(!testAppliance){
-                let newFilteredRecipes = [];
-                for (let i = 0; i < FilteredRecipes.length; i++) {
-                    if(FilteredRecipes[i] !== recipe) {
-                        newFilteredRecipes.push(FilteredRecipes[i])
-                    }
-                }
-                FilteredRecipes = newFilteredRecipes;
+            if(testAppliance){
+                temporaryRecipeList.push(FilteredRecipes[i])
             }
         }
+        FilteredRecipes = temporaryRecipeList
+        temporaryRecipeList = []
     }
 
     // ustensil filter
     if(ustensils.Ustensil.length){
         // Loop over each recipe
-        for (const recipe of FilteredRecipes) {
+        for (let i = 0; i < FilteredRecipes.length; i++){
+            const recipe = FilteredRecipes[i]
+
+            // Fetch ustensil intersection : recipe <> checked ustensils
             let intersectionArray = [];
             for(let j = 0; j < recipe.ustensils.length; j++) {
                 if(ustensils.Ustensil.includes(recipe.ustensils[j].toLowerCase())){
                     intersectionArray.push(recipe.ustensils[j])
                 }
             }
+
+            // Get to know if all items checked are in the recipe ustensils
             let testIntersection = intersectionArray.length;
             const allItemsInRecipe = testIntersection === ustensils.Ustensil.length
-            if(!allItemsInRecipe){
-                let newFilteredRecipes = [];
-                for (let i = 0; i < FilteredRecipes.length; i++) {
-                    if(FilteredRecipes[i] !== recipe) {
-                        newFilteredRecipes.push(FilteredRecipes[i])
-                    }
-                }
-                FilteredRecipes = newFilteredRecipes;
+
+            // Add recipe to filtered list if YES (allItemsInRecipe === true)
+            if(allItemsInRecipe){
+                temporaryRecipeList.push(FilteredRecipes[i])
             }
         }
+        FilteredRecipes = temporaryRecipeList
     }
+    
     return FilteredRecipes
 }
 
