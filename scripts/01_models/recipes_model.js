@@ -7,11 +7,13 @@ export function getFilteredRecipeArray() {
     // searchbar filter
     let FilteredRecipes = recipes
     FilteredRecipes.forEach(recipe => {
+        // Concatenate all strings
         let stringToCheck = ''
         stringToCheck = stringToCheck.concat(recipe.name.toLowerCase(),' ',recipe.description.toLowerCase(),' ')
         recipe.ingredients.forEach(ingredient => {
             stringToCheck = stringToCheck.concat(ingredient.ingredient.toLowerCase(),' ')
         });
+        // Remove recipe where search is not present
         if(!stringToCheck.includes(SearchBarInput.toLowerCase())){
             FilteredRecipes = FilteredRecipes.filter(item => item !== recipe)
         }
