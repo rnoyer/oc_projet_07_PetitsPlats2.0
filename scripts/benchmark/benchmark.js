@@ -1,4 +1,4 @@
-// https://jsben.ch/T0FcP
+// https://jsben.ch/iEQnt
 
 //------------------------------//
 //          SETUP BLOCK         //
@@ -80,7 +80,7 @@ function fonctionnelGetFilteredRecipeArray(recipeList = [], searchbar = '', ingr
 
 // Algorithme natif
 
-export function natifGetFilteredRecipeArray(recipeList = [], searchbar = '', ingredients = emptyList, appliances = emptyList, ustensils = emptyList) {
+function natifGetFilteredRecipeArray(recipeList = [], searchbar = '', ingredients = emptyList, appliances = emptyList, ustensils = emptyList) {
 
     // searchbar filter
     let FilteredRecipes = recipeList
@@ -2003,7 +2003,7 @@ const recipes = [
 ]
 
 //------------------------------------------------------//
-//          CODE BLOCK 1 : Algo boucles natives         //
+//          CODE BLOCK 1 : Algo boucles fonctionnelles  //
 //------------------------------------------------------//
 
 fonctionnelGetFilteredRecipeArray(recipes,SearchBarInput,emptyList,emptyList,emptyList)
@@ -2012,7 +2012,7 @@ fonctionnelGetFilteredRecipeArray(recipes,'',emptyList,applianceListsOfCheckedEl
 fonctionnelGetFilteredRecipeArray(recipes,'',emptyList,emptyList,ustensilListsOfCheckedElements)
 
 //-------------------------------------------------------------//
-//          CODE BLOCK 2 : Algo boucles fonctionnelles         //
+//          CODE BLOCK 2 : Algo boucles natives                //
 //-------------------------------------------------------------//
 
 natifGetFilteredRecipeArray(recipes,SearchBarInput,emptyList,emptyList,emptyList)
